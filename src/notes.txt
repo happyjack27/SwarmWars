@@ -1,0 +1,507 @@
+===============
+TODO:
+-- have the organisms evolve ally/enemy classifiers ... or just have a 2 layer neural net...
+-- score xp based on energy consumption
+-- another type based on meat gathered.
+-- make so can see nutrient value
+-- make so rolling over circles organism.
+-- start at size 0, only grow when energy is full.
+-make it so armor does nor repair until certain period after last attacked.
+-add teamwork: repair (meaning also a repair tool), give food/energy
+-make enemy see pct stuff too
+*make meat rot - make it like plant class.
+*add nutritinal value to parts
+*make poison - fading area effect
+*make meta-evolvers - multilinear + bias and scale.
+*4 eigenvectors - scaled and on/off.  rather then multiply a matrix
+*separate body characteristics: 
+leg, weapon, store, armor, digest, brain,sight,communicate,
+all with both scale and switch.
+ . and size multiplier
+*adjustable multipiers at top of class, as static vars.
+add ability to carry/tow others (speed reduces to both masses so f=ma)
+*move physicaltraits stuff in animalgenome to body class
+*make poison, convert, lay, see, damage...
+*make amt_armor as pct of max an input
+*make health and energy inputs as pct of max
+
+--parts ideas---
+*poison sac
+*repair tool
+*tow tool
+*liver (for poison immunity)
+
+*panning and zooming of world map
+*minimap, showing teams.
+*drag and drop organisms
+*cyrochambers on the right side
+*mating chambers
+*purchase and upgrade chambers
+*show family tree - 2 or 3 generations?
+*add scale multipliers on genes?
+*store global bias and variance of genes.
+*adjust genes and let them float by centering them on an exponential moving average bias and variance.
+* (particle swarm optimization thing - that's the global mean)
+*can take resources from organisms - and distribute them to organisms, based on how much they have,
+what their energy and health levels are, etc.  can also take and give - i.e. exchange., so as to reward them.
+
+
+
+TODO:
+*ability to build/construct - give organisms this ability?
+*warp gates between maps
+*organisms should get feedback on how much damage they do
+*ability to control reward/punish vector.  reward/punish vector is part of input (or at least some of it) so the organisms respond to changes in it.
+*also ability to control movement biases, etc.  e.g. contract/expand.  retreat/engage.   
+*attack attributes: armor, hp, range, rate, dmg, as multiply to 1.
+**though what they multiply to can be improved by correct parity bits?
+*organisms must gather resources for building.
+*buldings include: incubator, hospital, greenhouse...
+*also completely different organisms, w/diff appearance, as traits  
+
+*move reuse queue to inside the classes being reused (make it static)
+*change landscape to be stored as scaled integers. (i.e. fixed point)
+*use kernels for all landscape operations
+*make own priority queue class based on linked list.
+*add radius (or 1) to distance to prevent singularities.
+*make kernels for convolutions and grid updates
+*PriorityQueue is broke.  make one from scratch.
+**then fix plants and remove the redundancies. (repeat scheduling) (have the priorityqueue class notify on duplicate schedulings.)
+
+*add time for plants that they are underground before appearing on grid (age)
+*make plants use scheduler
+*create landscape class, which can create random, convolve, scale, add, make brownian landscape, exp, add to landscape, etc.
+*then create climate class, whcih stores a landscape for: temp, humidity, fertility, elevation.
+**climate parameters effect movement speed, energy usage of organisms, fertility requirements, lifespan of plants.
+**make worldgrid use landscape.
+*move priority queue to itemporal.
+
+*add grid refresh function - sets grid to zero, set last update weight to zero, updates all. 
+-implement mass_at_last_update on resource logic.
+-plants: add generator (non-edible plant), spawn time, spawn distance (gaussian)
+*plant evolution:  tradeoff: faster procreation means lower density. (cause needs more energy)
+**lifetime can be free variable, so can spore radius.
+*camouflage? - color's proximity to local color affects visibility? 
+
+*plant grid seems broken
+*make showgrid a keyboard shortcut
+
+*make a differential quad-tree class
+*keep a running average genome, and add that to offspring?
+*add genes to enable/disable behavior inputs for faster thinking?
+
+-introduce alignment (-1,0,1)  can only attack enemy, neutral, can only breed friendly, neutral.  null player = neutral
+-*add alignment to input vectors / move vectors, including null=neutral
+-*give players alignment vectors.  if player is not in vector, then is neutral.
+*implement growth. (initial size, growth rate, growth function) affects top speed too?
+*implement walk/run switch w/energy tradeoff (walk is twice as efficient, half the speed)
+*implement coarse gridding for organisms
+-change organism move vectors to base + alignment modifier.
+
+*diplomatic status can be demoted by either player, but only promoted by mutual agreement.
+-everyone starts out enemies.
+*players are discovered by an organism coming into proximity.
+-combine attack & breed targets to attack/breed + attack/breed aligment modifier.  because e.g. weapon size might be attack target and breed target.
+*combine and attack and breed state into one signed modifier? 
+
+-make herbivores and carnivores - make meat food red, veg food green.  veg food constant.  meet food whenever animal dies
+-maybe disable signal mimicing?
+*add living organisms lifetimes to avg. lifespan.  if health full, twice as long as they've lived.
+**if health not full, as much to empty health at rate its emptied. = (lived so far)*(full health)/(full health - current health)
+*add "double" recessive trait, which doubles mass, weap, armor, and size.  requires all 1's in bit.
+
+*change eat state to consume resource and consume food state, so can pick which to eat based on energy value.
+
+*coevolution of plants - germination radius, spread radius, temperature preference, humidity preference, color adjustment, mass/size, plus a mass density.
+*also give them possible medicinal value - make energy and medicinal mutuallly exclusive
+
+-must see own armor and weap size for proper reaction!
+*world grid gets out of whack - need to reset it periodically by removing all resources, seeting grid to zero, adding all resources.
+   also look into the cause.  i think things are being added below their initial mass and then being removed at their initial mass.
+
+
+-make plant/meat preference a single variable.
+-healing requires equal parts energy and medicine.
+
+-make energy level visible
+-implement mate selection- pick random breeding, check if most elgibable bachelor is compatible
+-*etc.
+
+-evolve output for relative velocity mimicking.
+-make at least 3 different food types, w/food type selector, for mutual coexistance - make as different resource types.
+-*can have more than 1, but then efficiency goes down.  sum of efficiencies = 1, so favors specialization.
+-*when die become a certain type of food, or portions thereof.  (ideal to not be type that u eat, cause then r food for ppl in your area)
+-*make it like rock scissors paper?  r->g->b, or r,anti-red,etc. = 6 types?  or 4?
+*make habitat variation (eg. hot/cold, dry/wet) for speciation / adaptation.
+**make it so that can vary over time, too.
+*make coarse grid for organisms (organism sees 3x3.  use hashtable for bins?)
+-make armor and melee. (dont need to be able to eat them, at first)
+
+*allow auot-trading of resource.
+**behavior Trait[] buy_price 0-1 (logarithmic) (1-8)
+**behavior Trait[] profit_target 0-1 (logarithmic) sell price as multiple of buy price
+*start w/zero, have a max debt.
+
+=============
+market
+
+market maker buys/sells to maintain:
+40% cash
+20% hp
+20% mat
+20% energy
+
+sets limit orders, and hits market orders
+==========
+brain input also has:
+last change in stored resource levels
+
+emas are in time
+
+brain evolves:
+reinforcement per output
+reinforcement per resource level change
+emas (memory rate (in time)) for previous signal strengths to serve as back-propagation.
+========
+entity also includes base
+(at which things purchased off of market appear)
+
+====
+
+
+evo-wars  aka swarm
+
+buy and sell genes and resources
+
+combat - attack / defend
+
+breeding
+
+3 resources
+
+2 attack types
+melee
+ranged
+armor
+
+
+metaevolution
+
+//============================looks
+melee
+attack
+
+===========================evolution
+all traits are determined by the net number of on bits
+32 bits per trait, so range from 0 to 32
+then subtract 16 and divide by 16 to get -1 to 1 
+except for binary traits - those are just on/off
+and color is 8 bits a piece
+
+
+============================================physical evolution
+
+most physical traits are on a logarithmic scale.
+
+class Organism {
+
+float[] resource_levels;
+float[] meta_states;
+
+
+class VisibleTraits {
+    static boolean MALE = true;
+    static boolean FEMALE = false;
+    boolean gender; 
+    float[] color;
+    float[] signal;
+    float[] resource_levels;
+    float melee_weap;
+    float range_weap;
+    float size;
+    float aggression;
+}
+
+class BasicPhysicalTraits {
+    float[] color;
+    float stealth;
+    float sight;
+    float armor;
+    float max_energy_consumption_rate;
+}
+
+
+class BreedingTraits {
+    float breeding_age;
+    float gestation_rate;
+    float growth_rate;
+    float[] abortion_thesholds;
+}
+
+
+class ControlTraits {
+    boolean stealth_enabled;
+    boolean movement_enabled;
+    boolean melee_enabled;
+    boolean ranged_enabled;
+    boolean[] scan_enabled;
+    boolean[] harvest_enabled;
+    boolean[] xfer_enabled;
+    boolean[] drop_enabled;
+    boolean[] color_sight_enabled;
+    boolean[] color_signal_enabled;
+    boolean[] meta_enabled; //3
+//+pheromes (drop pherome) <- pheromes decay at different rate
+}
+
+class KineticTraits { //these all require energy
+    float movement_energy;
+    float movement_efficiency;
+    float melee_energy;
+    float melee_efficiency;
+    float melee_reload;
+    float melee_range;
+    float ranged_energy;
+    float ranged_efficiency;
+    float ranged_reload;
+    float ranged_range;
+    float ranged_accuracy;
+}
+
+
+class ResourceTraits {
+    static int HP=0;
+    static int ENERGY=1;
+    static int MATERIAL=2;
+    float[] resouce_scanning;
+    float[] harvest_rate;
+    float[] harvest_efficiency;
+    float[] harvest_range;
+    float[] store;
+    float[] xfer_rate;
+    float[] xfer_efficiency;
+    float[] xfer_range;
+    float[] drop;
+    float[] waste;
+    float hp_regen_from_mat_and_ener; //can do any of 3 conversions?
+}
+
+
+targets (approach/avoid/attack/mate/xfer resource):
+-friendly color/signal
+--red
+--green
+--blue
+--alpha
+--melee weap
+--range weap
+-friendly state
+--resource levels
+-enemy state
+--hurt/healthy
+-resource (r,g,b)
+
+}
+
+float[] stored_resources; //when energy or mat expire, consume hp.  when hp=0, dead. (no ener=cant do anything kinetic)
+int state;
+static int STATE_UNBORN;
+static int STATE_ALIVE;
+static int STATE_DEAD;
+
+public void doTime(float time) {
+}
+ //input switches and mixers
+ //output switches and mixers
+//squashing bit on outpus saling bit on output
+}
+
+
+
+=====
+//evo
+breeding age, quantity, frequency, gestation time
+male/female
+
+//physical
+natural lifespan
+armor
+stealth
+color (r/g/b)
+
+//resources
+sight (hp / mat / energy)
+harvest (hp / mat / energy) - rate, range, efficiency 
+storage (hp / mat / energy)
+xfer (hp / mat / energy) - rate, range, efficiency
+drop (hp / mat / energy) - rate
+waste (hp / mat / energy)
+hp regen/repair (from mat) - rate, efficiency
+
+//kinetic - consumes energy
+movement speed (cut in half when harvesting) (uses energy based on mass features)
+melee attack - strength(force/mass), cycle time, range (each attack uses energy)
+ranged attack - strength(force/mass), cycle time, aim (miss chance per distance), range (each attack uses energy + material)
+
+//max energy usage rate
+max energy usage rate
+
+//junk
+junk dna (speciation baggage)
+
+//control genes:
+turns on/off melee, ranged, healing, sight, stealth, regen, mobile, rgb signal, state awareness, rgb awareness (color / signal)
+
+
+=============================================================teamwork
+
+====alliances===
+non-aggression pact
+resource sharing pacts (mat/en/hp) <-can set imbalance quotas/exchange rate, can set exchange rate to follow market, can set exchange rate to be quotad at max value, can set to trade money automatically or not
+sight sharing pacts
+
+
+===collectives===
+overrides  all states that are friendlier in the collective.
+
+
+===stock exchange==
+*limit orders on resources
+*buy/sell creatures, show stats, can search by stats
+
+resources traded at exchange show up at base
+
+
+can do individual trades to
+
+
+==============================================================behavior evolution===
+
+*ouput scalers
+*input scalers
+
+
+game controlled states:
+*default
+*resource levels
+*pregnant/not
+
+targets (approach/avoid/attack/mate/xfer resource):
+-friendly color/signal
+--red
+--green
+--blue
+--alpha
+--melee weap
+--range weap
+-friendly state
+--resource levels
+-enemy state
+--hurt/healthy
+-resource (r,g,b)
+
+
+----------------inputs: (fade squared w/proximity)
+sensor inputs: (controls agg/pass, meta1, & meta2 states)
+-friendly color/signal
+--red
+--green
+--blue
+--alpha
+-friendly state
+--resource levels
+--fight/flight
+-enemy state
+--hurt/healthy
+--fight/flight
+-resource (r,g,b)
+-self
+--resource levels
+--fight/flight (>0 = attack)
+--meta1
+--meta2
+
+
+strength = (initial/distance^2)*sensitivity
+input_signal += strength
+
+each input is mixed w/a weight into each output.
+
+
+----------------outputs:
++means has spatial output mixer
+signaling outputs:
+*red
+*green
+*blue
+*alpha
+
+binary actions:
+*+mate
+*+harvest (mat/ener/hp) (if not full)
+*+xfer (mat/ener/hp) (to highest one that's not full)
+*+regen
+
+linear actions:
+*+fight/flight
+*+meta1
+*+meta2
+
++default
++resouce levels
++pregnant/not pregnant
+
+----------------spatial output mixers:
+targets (all:approach/avoid - creature only:attack/mate/xfer resource):
+-friendly/enemy color/signal
+--red
+--green
+--blue
+--alpha
+-friendly/enemy
+--melee weap size
+--range weap size
+--overall size
+--null (just proximity)
+-friendly state
+--resource levels (hp/ener/mat)
+-enemy state
+--hurt/healthy
+-resource (hp/ener/mat)
+
+
+
+strength = (initial/distance^2)*sensitivity
+movement += unit_vector*strength
+
+-this only determines direction.  speed is determined by the speed scaler.
+
+---------------more mixers:
+-input multipiers
+-output multipliers
+
+
+=============================================evolution process
+
+pick random bits from each, then mutate a few
+for speciation, must have at least % genes the same equal to % of "good" bits
+speciation <-hamming distance
+
+also add ionizing radiation, causes mutation.
+and nomads, which are breedable and you have offspring, and nomads that attack.
+
+
+number of bits in on state w/mutation
+
+areas generate at pink noise rate
+
+target average proximity
+
+
+
+
+
+-
+-
+-
+
